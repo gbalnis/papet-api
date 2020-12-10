@@ -1,13 +1,14 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
-  title: Papet Gateway API
+    version: 1.0.0
+    title: Papet Gateway API
 servers:
   - url: 'http://api.gateway.papet.balnis.eu/v1'
 
 tags:
     - name: gateway-registration
     - name: client-binding
+
 paths:
     /register-gateway:
         post:

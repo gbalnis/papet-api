@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Papet Gateway API
+servers:
+  - url: 'http://api.gateway.papet.balnis.eu/v1'
+paths:
+    /register-gateway:
+        post:
+            operationId: registerGateway
+            summary: Register a new Papet gateway
+            requestBody:
+                $ref: '#/requestBodies/ManipulateGateway'
+
+            responses:
+                '200':
+                    description: all good
+                '400':
+                    description: the format of the body was not recognized or the data contained was invalid
+                '401':
+                    description: credentials not valid
+                '403':
+                    description: Papet doesn't accept registration at this time
+                default:
+                    description: Unexpected error
+    /update-gateway:
+        post:
+            summary: update an existing Papet gateway
+            requestBody:
+                $ref: '#/requestBodies/ManipulateGateway'
+            responses:
+                '200':
+                    description: all good
+                '400':
+                    description: the format of the body was not recognized or the data contained was invalid
+                '401':
+                    description: credentials not valid
+                '403':
+                    description: Papet doesn't accept registration at this time
+                default:
+                    description: Unexpected error
+
+components:
+    schemas:
+        TypeOfWork:
+            description: structured data packed into a string, see documentation
+            type: string
+    requestBodies:
+        ManipulateGateway:
+            content:
+                'application/json':
+                    schema:
+                        type: object
+                        required:
+                            - clientId
+                            - clientSecret
+                            - restEndpoint
+                            - requiresBrowserOnCreate
+                        properties:
+                            # authorization
+                            clientId:
+                                type: string
+                            clientSecret:
+                                type: string
+                            # payload
+                            restEndpoint:
+                                type: string
+                            requiresBrowserOnCreate:
+                                type: boolean
+                            icon:
+                                description: image is passed as base64-encoded binary entity, see documentation
+                                type: string
+                            typesofwork:
+                                type: array
+                                items:
+                                    $ref: '#/schemas/TypeOfWork'
+                            targets:
+                                type: array
+                                items:
+                                    type: object
+                                    required: 
+                                        - id
+                                        - texts
+                                    properties:
+                                        id:
+                                            description: there are restictions to what the string values might be, see documentation
+                                            type: string
+                                        typeofwork:
+                                            $ref: '#/schemas/TypeOfWork'
+                                        texts:
+                                            type: array
+                                            minItems: 1
+                                            items:
+                                                type: object
+                                                required: 
+                                                    - language
+                                                    - label
+                                                properties:
+                                                    language:
+                                                        description: ISO 639-1 lang code
+                                                        type: string
+                                                    label:
+                                                        type: string

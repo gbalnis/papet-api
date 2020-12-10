@@ -3,11 +3,12 @@ info:
     version: 1.0.0
     title: Papet Gateway API
 servers:
-  - url: 'http://api.gateway.papet.balnis.eu/v1'
+  - url: 'https://api.gateway.papet.balnis.eu/v1'
 
 tags:
     - name: gateway-registration
     - name: client-binding
+    - name: checkpoint
 
 paths:
     /register-gateway:
@@ -65,6 +66,8 @@ paths:
                                     required:
                                         - clientId
                                         - clientSecret
+                                        - nonce
+                                        - connectionId
                                     properties:
                                         # authentication
                                         clientId:
@@ -74,7 +77,9 @@ paths:
                                         # authorization
                                         nonce:
                                             type: string
-                                        # payload
+                                        connectionId:
+                                            type: string
+                                # payload
                                 -   oneOf:
                                         -   type: object
                                             required:
@@ -103,6 +108,73 @@ paths:
                     $ref: '#/responses/Error'
                 default:
                     $ref: '#/responses/Error'
+
+    /checkpoint:
+        post:
+            tags:
+                - checkpoint
+            requestBody:
+                content:
+                    'application/json':
+                        schema:
+                            type: object
+                            required:
+                                - clientId
+                                - clientSecret
+                                - nonce
+                                - connectionId
+                                - checkpointName
+                            properties:
+                                # authentication
+                                clientId:
+                                    type: string
+                                clientSecret:
+                                    type: string
+                                # authorization
+                                nonce:
+                                    type: string
+                                connectionId:
+                                    type: string
+                                # payload
+                                checkpointName:
+                                    type: string
+                                instances:
+                                    type: array
+                                    items:
+                                        oneOf:
+                                            -   type: object
+                                                properties:
+                                                    target:
+                                                        type: string
+                                                        enum: [ 'recurring' ]
+                                                    date:
+                                                        type: string
+                                                        format: date
+                                            -   type: object
+                                                properties:
+                                                    target:
+                                                        type: string
+                                                        enum: [ 'on-demand' ]
+                                                    instanceIdentifier:
+                                                        description: selected set of characters are allowed, see documentation
+                                                        type: string
+                                                        maxLength: 100
+            responses:
+                '200':
+                    description: all good
+                '400':
+                    $ref: '#/responses/Error'
+                '401':
+                    $ref: '#/responses/Error'
+                '403':
+                    $ref: '#/responses/Error'
+                '404':
+                    $ref: '#/responses/Error'
+                default:
+                    $ref: '#/responses/Error'
+
+
+            
 
 components:
     schemas:

@@ -4,9 +4,15 @@ info:
   title: Papet Gateway API
 servers:
   - url: 'http://api.gateway.papet.balnis.eu/v1'
+
+tags:
+    - name: gateway-registration
+    - name: client-binding
 paths:
     /register-gateway:
         post:
+            tags:
+                - gateway-registration
             operationId: registerGateway
             summary: Register a new Papet gateway
             requestBody:
@@ -25,6 +31,9 @@ paths:
                     description: Unexpected error
     /update-gateway:
         post:
+            tags:
+                - gateway-registration
+            operationId: updateGateway
             summary: update an existing Papet gateway
             requestBody:
                 $ref: '#/requestBodies/ManipulateGateway'
@@ -32,13 +41,66 @@ paths:
                 '200':
                     description: all good
                 '400':
-                    description: the format of the body was not recognized or the data contained was invalid
+                    $ref: '#/responses/Error'
                 '401':
-                    description: credentials not valid
+                    $ref: '#/responses/Error'
                 '403':
-                    description: Papet doesn't accept registration at this time
+                    $ref: '#/responses/Error'
                 default:
-                    description: Unexpected error
+                    $ref: '#/responses/Error'
+
+    /connection-created:
+        post:
+            tags:
+                - client-binding
+            operationId: connectionCreated
+            requestBody:
+                content:
+                    'application/json':
+                        schema:
+                            allOf:
+                                -   type: object
+                                    required:
+                                        - clientId
+                                        - clientSecret
+                                    properties:
+                                        # authentication
+                                        clientId:
+                                            type: string
+                                        clientSecret:
+                                            type: string
+                                        # authorization
+                                        nonce:
+                                            type: string
+                                        # payload
+                                -   oneOf:
+                                        -   type: object
+                                            required:
+                                                - externalClientName
+                                            properties:
+                                                externalClientName:
+                                                    type: string
+                                        -   type: object
+                                            required:
+                                                - failure
+                                            properties:
+                                                failure:
+                                                    type: string
+                                                    enum:
+                                                        - rejected
+                                                        - timeout
+                                                        - other
+            responses:
+                '200':
+                    description: all good
+                '400':
+                    $ref: '#/responses/Error'
+                '401':
+                    $ref: '#/responses/Error'
+                '403':
+                    $ref: '#/responses/Error'
+                default:
+                    $ref: '#/responses/Error'
 
 components:
     schemas:
@@ -57,7 +119,7 @@ components:
                             - restEndpoint
                             - requiresBrowserOnCreate
                         properties:
-                            # authorization
+                            # authentication
                             clientId:
                                 type: string
                             clientSecret:
@@ -101,3 +163,14 @@ components:
                                                         type: string
                                                     label:
                                                         type: string
+
+    responses:
+        Error:
+            description: general purpose error
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            error:
+                                type: string

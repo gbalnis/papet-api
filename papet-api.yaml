@@ -22,13 +22,14 @@ paths:
                 '200':
                     description: all good
                 '400':
-                    description: the format of the body was not recognized or the data contained was invalid
+                    $ref: '#/responses/Error'
                 '401':
-                    description: credentials not valid
+                    $ref: '#/responses/Error'
                 '403':
-                    description: Papet doesn't accept registration at this time
+                    $ref: '#/responses/Error'
                 default:
-                    description: Unexpected error
+                    $ref: '#/responses/Error'
+
     /update-gateway:
         post:
             tags:

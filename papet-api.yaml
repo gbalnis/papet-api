@@ -9,6 +9,7 @@ tags:
     - name: gateway-registration
     - name: client-binding
     - name: checkpoint
+    - name: on-demand
 
 paths:
     /register-gateway:
@@ -173,7 +174,60 @@ paths:
                 default:
                     $ref: '#/responses/Error'
 
-
+    /create-ondemand-instance:
+        post:
+            tags:
+                - on-demand
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required:
+                                -   clientId
+                                -   clientSecret
+                                -   connectionId
+                                -   process
+                                -   instanceIdentifier
+                                -   displayName
+                                -   date
+                            properties:
+                                # authentication
+                                clientId:
+                                    type: string
+                                clientSecret:
+                                    type: string
+                                # authorization
+                                connectionId:
+                                    type: string
+                                # payload
+                                process:
+                                    type: string
+                                instanceIdentifier:
+                                    description: there are restrictions on allowed characters, see documentation
+                                    type: string
+                                displayName:
+                                    type: string
+                                date:
+                                    type: string
+                                    format: date
+            responses:
+                '200':
+                    description: all good
+                '400':
+                    $ref: '#/responses/Error'
+                '401':
+                    $ref: '#/responses/Error'
+                '403':
+                    $ref: '#/responses/Error'
+                '404':
+                    $ref: '#/responses/Error'
+                '409':
+                    $ref: '#/responses/Error'
+                default:
+                    $ref: '#/responses/Error'
+                                
+                         
             
 
 components:

@@ -114,6 +114,7 @@ paths:
         post:
             tags:
                 - checkpoint
+            operationId: checkpoint
             requestBody:
                 content:
                     'application/json':
@@ -178,6 +179,7 @@ paths:
         post:
             tags:
                 - on-demand
+            operationId: createOnDemandInstance
             requestBody:
                 content:
                     application/json:
@@ -235,6 +237,7 @@ components:
         TypeOfWork:
             description: structured data packed into a string, see documentation
             type: string
+    
     requestBodies:
         ManipulateGateway:
             content:

@@ -19,19 +19,19 @@ paths:
             operationId: registerGateway
             summary: Register a new Papet gateway
             requestBody:
-                $ref: '#/requestBodies/ManipulateGateway'
+                $ref: '#/components/requestBodies/ManipulateGateway'
 
             responses:
                 '200':
                     description: all good
                 '400':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '401':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '403':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 default:
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
 
     /update-gateway:
         post:
@@ -40,18 +40,18 @@ paths:
             operationId: updateGateway
             summary: update an existing Papet gateway
             requestBody:
-                $ref: '#/requestBodies/ManipulateGateway'
+                $ref: '#/components/requestBodies/ManipulateGateway'
             responses:
                 '200':
                     description: all good
                 '400':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '401':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '403':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 default:
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
 
     /connection-created:
         post:
@@ -102,13 +102,13 @@ paths:
                 '200':
                     description: all good
                 '400':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '401':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '403':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 default:
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
 
     /checkpoint:
         post:
@@ -164,15 +164,15 @@ paths:
                 '200':
                     description: all good
                 '400':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '401':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '403':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '404':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 default:
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
 
     /create-ondemand-instance:
         post:
@@ -215,17 +215,17 @@ paths:
                 '200':
                     description: all good
                 '400':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '401':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '403':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '404':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 '409':
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                 default:
-                    $ref: '#/responses/Error'
+                    $ref: '#/components/responses/Error'
                                 
                          
             

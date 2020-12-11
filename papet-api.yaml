@@ -263,7 +263,7 @@ components:
                             typesofwork:
                                 type: array
                                 items:
-                                    $ref: '#/schemas/TypeOfWork'
+                                    $ref: '#/components/schemas/TypeOfWork'
                             targets:
                                 type: array
                                 items:
@@ -276,7 +276,7 @@ components:
                                             description: there are restictions to what the string values might be, see documentation
                                             type: string
                                         typeofwork:
-                                            $ref: '#/schemas/TypeOfWork'
+                                            $ref: '#/components/schemas/TypeOfWork'
                                         texts:
                                             type: array
                                             minItems: 1
